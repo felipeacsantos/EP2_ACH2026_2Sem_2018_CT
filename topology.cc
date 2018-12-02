@@ -186,20 +186,32 @@ int main(int argc, char *argv[])
 
   /* Simulation. */
   /* Pcap output. */
+  
+  /* Start and clean simulation. */
+  
+  AnimationInterface::SetConstantPosition(term_1.Get(0),0.0,22.0);
+  AnimationInterface::SetConstantPosition(term_4.Get(0),0.0,66.0);
+  AnimationInterface::SetConstantPosition(term_2.Get(0),78.0,22.0);
+  AnimationInterface::SetConstantPosition(term_3.Get(0),78.0,66.0);
+
+  AnimationInterface::SetConstantPosition(router_0.Get(0),19.5,44.0);
+  AnimationInterface::SetConstantPosition(router_2.Get(0),58.5,44.0);
+
+  AnimationInterface anim("anim1.xml");
+
+  anim.UpdateNodeColor(term_1.Get(0),0,0,255);
+  anim.UpdateNodeColor(term_4.Get(0),0,0,255);
+  anim.UpdateNodeColor(term_2.Get(0),255,0,0);
+  anim.UpdateNodeColor(term_3.Get(0),255,0,0);
+
+  anim.UpdateNodeColor(router_0.Get(0),0,255,0);
+  anim.UpdateNodeColor(router_2.Get(0),0,255,0);
+
+  Simulator::Run ();
+
   /* Stop the simulation after x seconds. */
   uint32_t stopTime = 3;
   Simulator::Stop (Seconds (stopTime));
-  
-  /* Start and clean simulation. */
-  AnimationInterface anim("anim1.xml");
-  anim.SetConstantPosition(term_1.Get(0),1.0,2.0);
-  anim.SetConstantPosition(term_4.Get(0),1.0,1.0);
-  anim.SetConstantPosition(term_2.Get(0),2.0,2.0);
-  anim.SetConstantPosition(term_3.Get(0),2.0,1.0);
 
-  anim.SetConstantPosition(router_0.Get(0),1.3,1.5);
-  anim.SetConstantPosition(router_2.Get(0),1.7,1.5);
-
-  Simulator::Run ();
   Simulator::Destroy ();
 }
