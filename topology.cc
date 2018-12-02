@@ -5,6 +5,7 @@
 #include "ns3/bridge-module.h"
 #include "ns3/csma-module.h"
 #include "ns3/applications-module.h"
+#include "ns3/netanim-module.h"
 
 using namespace ns3;
 
@@ -79,15 +80,19 @@ int main(int argc, char *argv[])
 
   /* IP assign. */
   Ipv4AddressHelper ipv4;
-  ipv4.SetBase ("10.0.0.0", "0.0.0.255");
+  ipv4.SetBase ("10.0.0.0","255.255.255.0","0.0.0.1");
   Ipv4InterfaceContainer iface_ndc_hub_0 = ipv4.Assign (ndc_hub_0);
-  ipv4.SetBase ("10.0.1.0", "0.0.0.255");
+  
+  ipv4.SetBase ("10.0.1.0","255.255.255.0","0.0.0.2");
   Ipv4InterfaceContainer iface_ndc_hub_1 = ipv4.Assign (ndc_hub_1);
-  ipv4.SetBase ("10.0.2.0", "0.0.0.255");
+  
+  ipv4.SetBase ("10.0.2.0","255.255.255.0","0.0.0.3");
   Ipv4InterfaceContainer iface_ndc_hub_2 = ipv4.Assign (ndc_hub_2);
-  ipv4.SetBase ("10.0.3.0", "0.0.0.255");
+  
+  ipv4.SetBase ("10.0.3.0","255.255.255.0","0.0.0.4");
   Ipv4InterfaceContainer iface_ndc_hub_3 = ipv4.Assign (ndc_hub_3);
-  ipv4.SetBase ("10.0.4.0", "0.0.0.255");
+  
+  ipv4.SetBase ("10.0.4.0","255.255.255.0","0.0.0.5");
   Ipv4InterfaceContainer iface_ndc_hub_4 = ipv4.Assign (ndc_hub_4);
 
   /* Generate Route. */
@@ -131,6 +136,15 @@ int main(int argc, char *argv[])
   uint32_t stopTime = 3;
   Simulator::Stop (Seconds (stopTime));
   /* Start and clean simulation. */
+  AnimationInterface anim("anim1.xml");
+  anim.SetConstantPosition(term_1.Get(0),1.0,2.0);
+  anim.SetConstantPosition(term_4.Get(0),1.0,1.0);
+  anim.SetConstantPosition(term_2.Get(0),2.0,2.0);
+  anim.SetConstantPosition(term_3.Get(0),2.0,1.0);
+
+  anim.SetConstantPosition(router_0.Get(0),1.3,1.5);
+  anim.SetConstantPosition(router_2.Get(0),1.7,1.5);
+
   Simulator::Run ();
   Simulator::Destroy ();
 }
